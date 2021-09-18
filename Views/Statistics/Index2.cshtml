@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Statistics";
+}
+@model GroupViewModel
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/Statistics.css">
+
+    <title>Truffle</title>
+</head>
+<body>
+    <h1>Statistics!</h1>
+    @if (!Model.Items.Any())
+    {
+        <p>No data uploaded yet.</p>
+    }
+    else
+    {
+
+        @for (var temp = 0; temp < Model.Items.Count; temp++)
+        {
+        <ul>
+            <li>
+                @Html.DisplayFor(model => model.Items[temp].RestaurantName)
+                @foreach (var item in Model.Items[temp].Items)
+                {
+                    <ul>
+                        <li>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </li>
+                        <li>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </li>
+                        <li>
+                            @Html.DisplayFor(modelItem => item.NumberOfPeople)
+                        </li>
+                    </ul>
+                }
+            </li>
+        </ul>
+        }
+    }
+    <!--footer start-->
+    <footer class="container-fluid">
+        <div class="container pt-3 pb-3">
+            <div class="row">
+                <div class="col-md-4 offset-md-4">Designed by Sapir, Ben &Ilay</div>
+                <div class="col-md-4 text-right">
+                    <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                    <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                    <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer end-->
+</body>
+</html>

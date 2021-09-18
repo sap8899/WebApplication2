@@ -1,0 +1,85 @@
+﻿@model WebApplication1.Models.CategoryViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/restViews.css">
+
+    <title>Restaurants</title>
+</head>
+<body>
+    <div class="header">
+        <a href="/Home/Index">
+            <img alt="Qries" src="/img/logo1.png">
+        </a>
+    </div>
+    <h1>Our Restaurants</h1>
+    <form asp-controller="Restaurants" asp-action="Index" method="get">
+        <p>
+
+            <select asp-for="RestaurantCategory" asp-items="Model.Categories">
+                <option value="">All</option>
+            </select>
+            Search Restaurant: <input type="text" name="searchString" placeholder="Search.." />
+            <input type="submit" value="Filter" />
+        </p>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Restaurants[0].Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Restaurants[0].Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Restaurants[0].City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Restaurants[0].Address)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Restaurants)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.RestaurantId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.RestaurantId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.RestaurantId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        <p>
+            <a href="/Reservations/Create" class="btn btn-md custom-btn">Book Now</a>
+        </p>
+    </div>
+</body>

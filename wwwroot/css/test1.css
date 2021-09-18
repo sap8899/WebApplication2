@@ -1,0 +1,257 @@
+﻿/* CSS Document */
+html, body {
+    height: 100%;
+    width: 100%;
+    background: lightsteelblue;
+    font-family: "Playfair Display";
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Playfair Display";
+    letter-spacing: 3px;
+}
+
+.my-nav {
+    background-color: royalblue !important;
+    position: sticky;
+}
+
+    .my-nav .nav-link {
+        color:white ;
+        font-size: 18px;
+    }
+
+        .my-nav .nav-link:hover {
+            color: gainsboro;
+        }
+
+.fa-bars {
+    color: white;
+}
+
+#home {
+    background-image: url(../img/back.png);
+    background-position:center center;
+    background-attachment:initial;
+    background-size:auto;
+    width: 100%;
+    height: 100%;
+}
+.home-btn {
+    background-color:white;
+    border-color:darkblue;
+    color:darkblue;
+    transition: 1s;
+}
+
+    .home-btn:hover {
+        background-color:darkblue;
+        border-color: white;
+        color: white;
+        transition: 1s;
+    }
+.landing-text {
+    position:relative;
+    top: 80%;
+    text-align: center;
+    width: 100%;
+    color:white;
+}
+
+.landingheading1 {
+    font-size: 70px;
+    text-transform: capitalize;
+}
+
+.landingheading2 {
+    font-size: 35px;
+    text-transform: capitalize;
+}
+
+#logo {
+    width: 50px;
+    border-radius: 50%;
+
+}
+
+/*why u come here start*/
+.header-about{
+    color:darkblue;
+    text-align:center;
+}
+.custom-btn {
+    background-color: white;
+    border-color: darkblue;
+    color: darkblue;
+    transition: 1s;
+}
+
+    .custom-btn:hover {
+        background-color:darkblue;
+        border-color: white;
+        color: white;
+        transition: 1s;
+    }
+
+.bg-gray {
+    background-color: lightsteelblue;
+    position: relative;
+    width: 1000px;
+    height: 1000px;
+    border: 4px groove white;
+    border-radius: 5px;
+}
+
+.hero-heading {
+    color:darkblue;
+    font-size: 35px;
+}
+
+.hero-paragraph {
+    color:white;
+    font-size: 18px;
+}
+
+.hero-img {
+    border-radius: 0px 30px 0px 30px;
+    width: 250px;
+}
+
+/*why u come here end*/
+
+/*team start*/
+/*test s*/
+* {
+    box-sizing: border-box;
+}
+
+.wrapper {
+    display: flex;
+    width: 90%;
+    justify-content: space-around;
+}
+
+.card {
+    width: 250px;
+    height: 150px;
+    border-radius: 15px;
+    padding: 1.5rem;
+    background: white;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    transition: 0.4s ease-out;
+    box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.5);
+}
+
+    .card:hover {
+        transform: translateY(20px);
+    }
+
+        .card:hover:before {
+            opacity: 1;
+        }
+
+        .card:hover .info {
+            opacity: 1;
+            transform: translateY(0px);
+        }
+
+    .card:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 2;
+        transition: 0.5s;
+        opacity: 0;
+    }
+
+    .card img {
+        width: 100%;
+        height: 100%;
+        -o-object-fit: cover;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 15px;
+    }
+
+    .card .info {
+        position: relative;
+        z-index: 3;
+        color: white;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: 0.5s;
+    }
+
+        .card .info h1 {
+            margin: 0px;
+        }
+
+        .card .info p {
+            letter-spacing: 1px;
+            font-size: 15px;
+            margin-top: 8px;
+        }
+
+        .card .info button {
+            padding: 0.6rem;
+            outline: none;
+            border: none;
+            border-radius: 3px;
+            background: white;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.4s ease;
+        }
+
+            .card .info button:hover {
+                background: dodgerblue;
+                color: white;
+            }
+/*test e*/
+/*team end*/
+
+/*paralalxeffect start*/
+.proud {
+    background-image: url(img/5.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
+}
+
+.bar {
+    fill: steelblue;
+}
+/*paralalxeffect end*/
+
+
+
+/*blog start*/
+
+.card-blog {
+    border: none;
+}
+
+    .card-blog .card-img-top {
+        border-radius: 0px 30px 0px 30px;
+    }
+
+/*blog end*/
+
+
+/*footer start*/
+
+footer {
+    background-color: royalblue;
+    color: white;
+    font-size: 20px;
+}

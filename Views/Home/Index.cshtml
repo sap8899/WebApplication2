@@ -1,0 +1,178 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/test1.css">
+
+    <title>Truffle</title>
+</head>
+
+<body>
+    <!--navbar start-->
+
+    <nav class="navbar navbar-expand-lg  my-nav fixed-top">
+        <a class="navbar-brand" href="#"><img id="logo" src="img/logoMain.png"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span> <i class="fa fa-bars"></i> </span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Restaurants/Index">Restaurants</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Cities/Index">Cities</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Restaurants/Create">Got a restaurant? Click here!</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <!-- navbar end-->
+    <!--landing page start-->
+    <div id="home">
+        <div class="landing-text">
+            <p class="landingheading1">welcome to truffle</p>
+            <p class="landingheading2 d-none d-sm-block">book a table and enjoy!</p>
+        </div>
+    </div>
+    <!--landing page end-->
+    <!--team start-->
+
+    <div class="container-fluid team mb-5">
+        <div class="container">
+            <div class="row top-heading mt-5">
+                <div class="col-md-12">
+                    <h1 class="header-about">Popular Categories</h1>
+                </div>
+                <!--test s-->
+                <div class="wrapper">
+                    <div class="card">
+                        <img src="~/img/italian.png" />
+                        <div class="info">
+                            <h1>Italian</h1>
+                            <p>Check out some of the best Italian Restaurants</p>
+                            <a href="/Categories/Details/2" class="btn btn-md home-btn">Read More</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="~/img/mexican.png" />
+                        <div class="info">
+                            <h1>Mexican</h1>
+                            <p>Best spicy and exotic Mexican Restaurants.</p>
+                            <a href="/Categories/Details/3" class="btn btn-md home-btn">Read More</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="~/img/sushi.png" />
+                        <div class="info">
+                            <h1>Sushi</h1>
+                            <p>We picked for you the best asian Restaurants.</p>
+                            <a href="/Categories/Details/1" class="btn btn-md home-btn">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <!--test e-->
+            </div>
+        </div>
+    </div>
+
+    <!--team end-->
+    <!--why u come here start-->
+
+    <div class="container-fluid pt-5 bg-gray pb-5">
+        <div class="container">
+            <div class="row top-heading mt-5">
+                <div class="col-md-12">
+                    <h1 class="header-about">Enjoy our services</h1>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-sm-6">
+                    <img src="img/table.png" class="img-fluid hero-img" alt="img2">
+                </div>
+
+                <div class="col-sm-6">
+                    <h3 class="hero-heading">Table Reservation</h3>
+                    <p class="hero-paragraph">
+                        Reserve a table any time, its quick and easy!
+                        <br>
+                        <br />
+                    </p>
+                    <a href="/Reservations/Create" class="btn btn-md home-btn">Book Now</a>
+                </div>
+
+            </div>
+
+            <div class="row mt-4">
+
+                <div class="col-sm-6">
+                    <h3 class="hero-heading">Statistics</h3>
+                    <p class="hero-paragraph">
+                        Recive a restaurant Statistics.
+                        <br>
+                        <br />
+                    </p>
+                    <a href="/Statistics/Index1" class="btn btn-md home-btn">Group By</a>
+                    <a href="/Statistics/Index2" class="btn btn-md home-btn">Join</a>
+                    <a href="/Statistics/graph1" class="btn btn-md home-btn">Graph1</a>
+                    <a href="/Statistics/graph2" class="btn btn-md home-btn">Graph2</a>
+                </div>
+
+                <div class="col-sm-6">
+                    <img src="img/ai.jpg" class="img-fluid hero-img" alt="img2">
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-sm-6">
+                    <img src="img/rec.png" class="img-fluid hero-img" alt="img2">
+                </div>
+
+                <div class="col-sm-6">
+                    <h3 class="hero-heading">Critics</h3>
+                    <p class="hero-paragraph">
+                        Recieve restaurant rating.
+                        <br>
+                        <br />
+                    </p>
+                    <a href="#" class="btn btn-md home-btn">Book Now</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--why u come here end-->
+    <!--footer start-->
+    <footer class="container-fluid">
+        <div class="container pt-3 pb-3">
+            <div class="row">
+                <div class="col-md-4 offset-md-4">Designed by Sapir, Ben &Ilay</div>
+                <div class="col-md-4 text-right">
+                    <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                    <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                    <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer end-->
+</body>
+</html>
