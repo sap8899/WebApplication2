@@ -22,6 +22,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Categories
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Category.ToListAsync());

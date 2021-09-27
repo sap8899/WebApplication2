@@ -58,12 +58,12 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
             var results = from r in _context.Restaurant
-                          join p in _context.Reservations on r.RestaurantId equals p.RestaurantID
+                          join p in _context.TestReservations on r.RestaurantId equals p.RestaurantID
                           where r.RestaurantId == id
-                          orderby p.user
+                          orderby p.User
                           select new InnerDetailsViewModel
                           {
-                              UserName = p.user.FullName,
+                              UserName = p.User,
                               NumberOfPeople = p.NumberOfPeople,
                               Date = p.ReservationDate,
                               RestaurantName = r.Name,
@@ -74,14 +74,14 @@ namespace WebApplication1.Controllers
             var viewModel = new DetailsViewModel { Items = results.ToList() };
             if(!viewModel.Items.Any())
             {
-                return NotFound();
+                return View();
             }
 
             return View(viewModel);
         }
 
         // GET: Restaurants/Create
-        [Authorize]
+        [Authorize(Roles = "Restaurant Owner")]
         public IActionResult Create()
         {
             ViewData["Category"] = new SelectList(_context.Category, "Name", "Name");
@@ -94,6 +94,7 @@ namespace WebApplication1.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Restaurant Owner")]
         public async Task<IActionResult> Create([Bind("RestaurantId,Name,Category,City,Address")] Restaurant restaurant)
         {
             if (ModelState.IsValid)
@@ -115,6 +116,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Restaurants/Edit/5
+        [Authorize(Roles = "Restaurant Owner")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -135,6 +137,7 @@ namespace WebApplication1.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Restaurant Owner")]
         public async Task<IActionResult> Edit(int id, [Bind("RestaurantId,Name,Category,City,Address")] Restaurant restaurant)
         {
             if (id != restaurant.RestaurantId)
@@ -166,6 +169,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Restaurants/Delete/5
+        [Authorize(Roles = "Restaurant Owner")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -186,6 +190,7 @@ namespace WebApplication1.Controllers
         // POST: Restaurants/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Restaurant Owner")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var restaurant = await _context.Restaurant.FindAsync(id);

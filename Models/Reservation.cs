@@ -9,12 +9,12 @@ namespace WebApplication1.Models
 {
     public class Reservation
     {
-        [Display(Name = "Number")]
+        [Key]
         public int ReservationID { get; set; }
         
-        public int UserID { get; set; }
+        public string UserToken { get; set; }
         [Display(Name = "User Name")]
-        public User user { get; set; }
+        public string User { get; set; }
         public int RestaurantID { get; set; }
         [Display(Name = "Restaurant")]
 

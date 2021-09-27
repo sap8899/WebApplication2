@@ -17,11 +17,11 @@ namespace WebApplication1.Data
 
         public DbSet<WebApplication1.Models.Restaurant> Restaurant { get; set; }
 
-        public DbSet<WebApplication1.Models.Reservation> Reservations { get; set; }
+        public DbSet<WebApplication1.Models.Reservation> TestReservations { get; set; }
 
         public DbSet<WebApplication1.Models.City> City { get; set; }
         public DbSet<WebApplication1.Models.Category> Category { get; set; }
-        public DbSet<WebApplication1.Models.User> Users { get; set; }
+        public DbSet<WebApplication1.Models.User> TestUsers { get; set; }
         public DbSet<WebApplication1.Models.Manager> Managers { get; set; }
         public DbSet<WebApplication1.Models.Enrollment> Enrollments { get; set; }
 
@@ -36,7 +36,7 @@ namespace WebApplication1.Data
             modelBuilder.Entity<Manager>().ToTable("Manager");
 
             modelBuilder.Entity<Reservation>()
-                .HasKey(c => new { c.RestaurantID, c.UserID });
+                .HasKey(c => new { c.RestaurantID, c.UserToken });
             base.OnModelCreating(modelBuilder);
 
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

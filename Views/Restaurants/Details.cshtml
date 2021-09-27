@@ -16,46 +16,54 @@
     <title>Restaurant Details</title>
 </head>
 <body>
-
-    <p>
-        <h3>Reservations for restaurant @Html.DisplayName(Model.Items[0].RestaurantName)</h3>
-        <h5>City: @Html.DisplayName(Model.Items[0].City)</h5>
-        <h5>Address: @Html.DisplayName(Model.Items[0].Address)</h5>
-        <h5>Category: @Html.DisplayName(Model.Items[0].Category)</h5>
-    </p>
-    <div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Items[0].UserName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Items[0].Date)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Items[0].NumberOfPeople)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Items)
-                {
+    @if (Model != null)
+    {
+        <p>
+            <h3>Reservations for restaurant @Html.DisplayName(Model.Items[0].RestaurantName)</h3>
+            <h5>City: @Html.DisplayName(Model.Items[0].City)</h5>
+            <h5>Address: @Html.DisplayName(Model.Items[0].Address)</h5>
+            <h5>Category: @Html.DisplayName(Model.Items[0].Category)</h5>
+        </p>
+        <div>
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UserName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NumberOfPeople)
-                        </td>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Items[0].UserName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Items[0].Date)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Items[0].NumberOfPeople)
+                        </th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumberOfPeople)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>
+            <h3>There are 0 Reservations for this restaurant</h3>
+        </p>
+    }
     <div>
         <p>
             <a href="/Reservations/Create" class="btn btn-md custom-btn">Book Now</a>

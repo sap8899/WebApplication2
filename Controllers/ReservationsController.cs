@@ -21,13 +21,31 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Reservations
-        public async Task<IActionResult> Index()
+        [Authorize(Roles = "Restaurant Owner")]
+        public async Task<IActionResult> Index(string option, string search)
         {
-            var webApplication1Context = _context.Reservations.Include(r => r.Restaurant).Include(r => r.user);
-            return View(await webApplication1Context.ToListAsync());
+            //if a user choose the radio button option as Subject  
+            if (option == "Restaurant")
+            {
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return View(_context.TestReservations.Include(r => r.Restaurant)
+                    .Where(x => x.Restaurant.Name.Contains(search) || search == null).ToList());
+            }
+            else if (option == "City")
+            {
+                return View(_context.TestReservations.Include(r => r.Restaurant)
+                    .Where(x => x.Restaurant.City.Contains(search) || search == null).ToList());
+            }
+            else
+            {
+                return View(_context.TestReservations.Include(r => r.Restaurant)
+                    .Where(x => x.Restaurant.Category.Contains(search) || search == null).ToList());
+            }
         }
 
         // GET: Reservations/Details/5
+        [Authorize(Roles = "Restaurant Owner")]
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,9 +53,8 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var reservation = await _context.Reservations
+            var reservation = await _context.TestReservations
                 .Include(r => r.Restaurant)
-                .Include(r => r.user)
                 .FirstOrDefaultAsync(m => m.RestaurantID == id);
             if (reservation == null)
             {
@@ -51,7 +68,7 @@ namespace WebApplication1.Controllers
         public IActionResult Create()
         {
             ViewData["RestaurantID"] = new SelectList(_context.Restaurant, "RestaurantId", "Name");
-            ViewData["UserID"] = new SelectList(_context.Users, "UserId", "FirstName");
+            ViewData["User"] = new SelectList(_context.Users, "UserName", "UserName");
             return View();
         }
 
@@ -60,16 +77,24 @@ namespace WebApplication1.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReservationID,UserID,RestaurantID,NumberOfPeople,ReservationDate")] Reservation reservation)
+        public async Task<IActionResult> Create([Bind("ReservationID,User,RestaurantID,NumberOfPeople,ReservationDate")] Reservation reservation)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(reservation);
+                var res = new Reservation();
+                res.ReservationID = reservation.ReservationID;
+                res.Restaurant = reservation.Restaurant;
+                res.NumberOfPeople = reservation.NumberOfPeople;
+                res.RestaurantID = reservation.RestaurantID;
+                res.User = reservation.User;
+                res.ReservationDate = reservation.ReservationDate;
+                res.UserToken = _context.Users.SingleOrDefault(us => us.UserName == reservation.User).Id;
+                _context.TestReservations.Add(res);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["RestaurantID"] = new SelectList(_context.Restaurant, "RestaurantId", "Name", reservation.RestaurantID);
-            ViewData["UserID"] = new SelectList(_context.Users, "UserId", "FirstName", reservation.UserID);
+            ViewData["User"] = new SelectList(_context.Users, "UserName", "UserName", reservation.User);
             return View(reservation);
         }
 
@@ -82,13 +107,13 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var reservation = await _context.Reservations.FindAsync(id);
+            var reservation = await _context.TestReservations.FindAsync(id);
             if (reservation == null)
             {
                 return NotFound();
             }
             ViewData["RestaurantID"] = new SelectList(_context.Restaurant, "RestaurantId", "Name", reservation.RestaurantID);
-            ViewData["UserID"] = new SelectList(_context.Users, "UserId", "FirstName", reservation.UserID);
+            ViewData["User"] = new SelectList(_context.Users, "UserName", "UserName", reservation.User);
             return View(reservation);
         }
 
@@ -98,7 +123,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Restaurant Owner")]
-        public async Task<IActionResult> Edit(int id, [Bind("ReservationID,UserID,RestaurantID,NumberOfPeople,ReservationDate")] Reservation reservation)
+        public async Task<IActionResult> Edit(int id, [Bind("ReservationID,User,RestaurantID,NumberOfPeople,ReservationDate")] Reservation reservation)
         {
             if (id != reservation.RestaurantID)
             {
@@ -123,10 +148,10 @@ namespace WebApplication1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
+            //return RedirectToAction(nameof(Index));
             ViewData["RestaurantID"] = new SelectList(_context.Restaurant, "RestaurantId", "Name", reservation.RestaurantID);
-            ViewData["UserID"] = new SelectList(_context.Users, "UserId", "FirstName", reservation.UserID);
+            ViewData["User"] = new SelectList(_context.Users, "UserName", "UserName", reservation.User);
             return View(reservation);
         }
 
@@ -139,9 +164,8 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var reservation = await _context.Reservations
+            var reservation = await _context.TestReservations
                 .Include(r => r.Restaurant)
-                .Include(r => r.user)
                 .FirstOrDefaultAsync(m => m.RestaurantID == id);
             if (reservation == null)
             {
@@ -157,15 +181,15 @@ namespace WebApplication1.Controllers
         [Authorize(Roles = "Restaurant Owner")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var reservation = await _context.Reservations.FindAsync(id);
-            _context.Reservations.Remove(reservation);
+            var reservation = await _context.TestReservations.FindAsync(id);
+            _context.TestReservations.Remove(reservation);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ReservationExists(int id)
         {
-            return _context.Reservations.Any(e => e.RestaurantID == id);
+            return _context.TestReservations.Any(e => e.RestaurantID == id);
         }
     }
 }

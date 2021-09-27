@@ -297,8 +297,8 @@ namespace WebApplication1.Migrations
                     b.Property<int>("RestaurantID")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserToken")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("NumberOfPeople")
                         .HasColumnType("int");
@@ -309,9 +309,15 @@ namespace WebApplication1.Migrations
                     b.Property<int>("ReservationID")
                         .HasColumnType("int");
 
-                    b.HasKey("RestaurantID", "UserID");
+                    b.Property<string>("User")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("UserID");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RestaurantID", "UserToken");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reservation");
                 });
@@ -462,15 +468,12 @@ namespace WebApplication1.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("WebApplication1.Models.User", "user")
+                    b.HasOne("WebApplication1.Models.User", null)
                         .WithMany("Reservations")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Restaurant");
-
-                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Category", b =>

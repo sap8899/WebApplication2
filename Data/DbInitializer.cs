@@ -44,14 +44,14 @@ namespace WebApplication1.Data
 
             var users = new User[]
             {           
-                new User{Email="sapfed@gmail.com", FirstName="sapir", LastName="federovsky"},
-                new User{Email="Sagkap@gmail.com", FirstName="sagi", LastName="kaplanski"},
-                new User{Email="Benben@gmail.com", FirstName="ben", LastName="ben"},
-                new User{Email="Ilaila@gmail.com", FirstName="ilay", LastName="ilay"}
+                new User{Email="sapfed@abc.com", FirstName="sapir", LastName="federovsky"},
+                new User{Email="Sagkap@abc.com", FirstName="sagi", LastName="kaplanski"},
+                new User{Email="Benben@abc.com", FirstName="ben", LastName="ben"},
+                new User{Email="Ilaila@abc.com", FirstName="ilay", LastName="ilay"}
             };
             foreach (User u in users)
             {
-                context.Users.Add(u);
+                context.TestUsers.Add(u);
             }
             context.SaveChanges();
 

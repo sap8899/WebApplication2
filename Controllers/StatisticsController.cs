@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Models;
 using System.Text.Json;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = "Site Admin")]
     public class StatisticsController : Controller
     {
         private readonly WebApplication1Context _context;
@@ -23,7 +24,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public JsonResult InnerGet()
         {
-            var reservations = _context.Reservations.ToList();
+            var reservations = _context.TestReservations.ToList();
             var result = reservations.GroupBy(u => u.ReservationDate, (Key, Items) => new
             {
                 date = Key.ToString(),
@@ -71,11 +72,11 @@ namespace WebApplication1.Controllers
         {
             // test inner
             var InnerTest = (from Restaurant in _context.Restaurant
-                             join Reservation in _context.Reservations on Restaurant.RestaurantId equals Reservation.RestaurantID
+                             join Reservation in _context.TestReservations on Restaurant.RestaurantId equals Reservation.RestaurantID
                              select new ReservationDetailsViewModel
                              {
                                  RestaurantName = Restaurant.Name,
-                                 UserName = Reservation.user.LastName,
+                                 UserName = Reservation.User,
                                  Date = Reservation.ReservationDate,
                                  NumberOfPeople = Reservation.NumberOfPeople
                              }).ToList();

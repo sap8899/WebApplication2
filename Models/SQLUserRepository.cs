@@ -17,17 +17,17 @@ namespace WebApplication1.Models
 
         public User Add(User user)
         {
-            context.Users.Add(user);
+            context.TestUsers.Add(user);
             context.SaveChanges();
             return user;
         }
 
         public User Delete(int UserId)
         {
-            User user = context.Users.Find(UserId);
+            User user = context.TestUsers.Find(UserId);
             if (user != null)
             {
-                context.Users.Remove(user);
+                context.TestUsers.Remove(user);
                 context.SaveChanges();
             }
             return user;
@@ -35,17 +35,17 @@ namespace WebApplication1.Models
 
         public IEnumerable<User> GetAllUsers()
         {
-            return context.Users;
+            return context.TestUsers;
         }
 
         public User GetUser(int UserId)
         {
-            return context.Users.Find(UserId);
+            return context.TestUsers.Find(UserId);
         }
 
         public User Update(User userChanges)
         {
-            var user = context.Users.Attach(userChanges);
+            var user = context.TestUsers.Attach(userChanges);
             user.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             context.SaveChanges();
             return userChanges;

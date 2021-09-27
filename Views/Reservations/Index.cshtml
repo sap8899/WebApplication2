@@ -21,14 +21,22 @@
     <p>
         <a asp-action="Create">Create New</a>
     </p>
+    @using (Html.BeginForm("Index", "Reservations", FormMethod.Get))
+    {
+        //the following are search options
+        @Html.RadioButton("option", "Restaurant") <text>Restaurant</text>
+        @Html.RadioButton("option", "City") <text> City </text>
+        @Html.RadioButton("option", "Category")<text>Category</text>
+        @Html.TextBox("search")
+        <input type="submit"
+               name="submit"
+               value="Search" />
+    }
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.ReservationID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.user)
+                    @Html.DisplayNameFor(model => model.User)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Restaurant)
@@ -47,10 +55,7 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ReservationID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.user.FirstName)
+                        @Html.DisplayFor(modelItem => item.User)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Restaurant.Name)
@@ -63,7 +68,6 @@
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                         @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                     </td>
                 </tr>

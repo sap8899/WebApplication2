@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            var courses = _context.Users
+            var courses = _context.TestUsers
             .Include(r => r.Reservations)
             .AsNoTracking();
             return View(await courses.ToListAsync());
@@ -36,7 +36,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var user = await _context.TestUsers
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (user == null)
             {
@@ -76,7 +76,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.TestUsers.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -127,7 +127,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var user = await _context.TestUsers
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (user == null)
             {
@@ -142,15 +142,15 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            _context.Users.Remove(user);
+            var user = await _context.TestUsers.FindAsync(id);
+            _context.TestUsers.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UserExists(int id)
         {
-            return _context.Users.Any(e => e.UserId == id);
+            return _context.TestUsers.Any(e => e.UserId == id);
         }
     }
 }
