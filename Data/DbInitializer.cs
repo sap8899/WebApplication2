@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +9,58 @@ namespace WebApplication1.Data
 {
     public static class DbInitializer
     {
+        public static void SeedUsers(UserManager<IdentityUser> userManager)
+        {
+            IdentityUser userResult = userManager.FindByEmailAsync("sapfed@gmail.com").Result;
+            IdentityUser user = new IdentityUser
+            {
+                UserName = "sapir",
+                Email = "sapfed@gmail.com",
+            };
+            if (userResult == null)
+            {
+                userManager.CreateAsync(user, "ICanSeeU!@12").Wait();
+            }
+            userManager.AddToRoleAsync(user, "Site Admin").Wait();
+            userManager.AddToRoleAsync(user, "Restaurant Owner").Wait();
+
+            IdentityUser tempUser2 = userManager.FindByEmailAsync("sagkap@gmail.com").Result;
+            IdentityUser user2 = new IdentityUser
+            {
+                UserName = "sagi",
+                Email = "sagkap@gmail.com",
+            };
+            if (tempUser2 == null)
+            {
+                userManager.CreateAsync(user2, "ICanSeeU!@12").Wait();
+            }
+            userManager.AddToRoleAsync(user2, "Restaurant Owner").Wait();
+
+            IdentityUser tempUser3 = userManager.FindByEmailAsync("benben@gmail.com").Result;
+            IdentityUser user3 = new IdentityUser
+            {
+                UserName = "ben",
+                Email = "benben@gmail.com",
+            };
+            if (tempUser3 == null)
+            {
+                userManager.CreateAsync(user3, "ICanSeeU!@12").Wait();
+            }
+            userManager.AddToRoleAsync(user3, "Restaurant Owner").Wait();
+
+            IdentityUser tempUser4 = userManager.FindByEmailAsync("ilaila@gmail.com").Result;
+            IdentityUser user4 = new IdentityUser
+            {
+                UserName = "ilay",
+                Email = "ilaila@gmail.com",
+            };
+            if (tempUser4 == null)
+            {
+                userManager.CreateAsync(user4, "ICanSeeU!@12").Wait();
+            }
+            userManager.AddToRoleAsync(user4, "Restaurant Owner").Wait();
+        }
+
         public static void Initialize(WebApplication1Context context)
         {
             context.Database.EnsureCreated();
@@ -44,10 +97,10 @@ namespace WebApplication1.Data
 
             var users = new User[]
             {           
-                new User{Email="sapfed@abc.com", FirstName="sapir", LastName="federovsky"},
-                new User{Email="Sagkap@abc.com", FirstName="sagi", LastName="kaplanski"},
-                new User{Email="Benben@abc.com", FirstName="ben", LastName="ben"},
-                new User{Email="Ilaila@abc.com", FirstName="ilay", LastName="ilay"}
+                new User{Email="sapfed@gmail.com", FirstName="sapir", LastName="federovsky"},
+                new User{Email="sagkap@gmail.com", FirstName="sagi", LastName="kaplanski"},
+                new User{Email="benben@gmail.com", FirstName="ben", LastName="korman"},
+                new User{Email="ilaila@gmail.com", FirstName="ilay", LastName="chait"}
             };
             foreach (User u in users)
             {
@@ -70,13 +123,13 @@ namespace WebApplication1.Data
             
             var managers = new Manager[]
             {
-                new Manager{FirstName="a", LastName="a",
+                new Manager{FirstName="sapir", LastName="federovsky",
                     RestaurantId=restaurants.FirstOrDefault(r => r.Name == "ChopChop").RestaurantId},
-                new Manager{FirstName="b", LastName="b",
+                new Manager{FirstName="sagi", LastName="kaplanski",
                     RestaurantId=restaurants.FirstOrDefault(r => r.Name == "Vivino").RestaurantId},
-                new Manager{FirstName="c", LastName="c",
+                new Manager{FirstName="ben", LastName="korman",
                     RestaurantId=restaurants.FirstOrDefault(r => r.Name == "Mexicana").RestaurantId},
-                new Manager{FirstName="d", LastName="d",
+                new Manager{FirstName="ilay", LastName="hait",
                     RestaurantId=restaurants.FirstOrDefault(r => r.Name == "Landwer").RestaurantId}
             };  
             foreach (Manager m in managers)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,6 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "Site Admin")]
     public class RestaurantsController : Controller
     {
         private readonly WebApplication1Context _context;
@@ -20,7 +20,7 @@ namespace WebApplication1.Controllers
         {
             _context = context;
         }
-
+        [AllowAnonymous]
         // GET: Restaurants
         public async Task<IActionResult> Index(string RestaurantCategory,string searchString)
         {
@@ -49,13 +49,20 @@ namespace WebApplication1.Controllers
 
             return View(RestaurantCatrgoryVM);
         }
-
+        [Authorize(Roles = "Restaurant Owner")]
         // GET: Restaurants/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
+            }
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserName = currentUser.FindFirst(ClaimTypes.Name).Value;
+            var managerName = _context.Managers.SingleOrDefault(c => c.RestaurantId == id).FirstName;
+            if (currentUserName.ToString() != managerName.ToString())
+            {
+                return View("AccessDenied", "Shared");
             }
             var results = from r in _context.Restaurant
                           join p in _context.TestReservations on r.RestaurantId equals p.RestaurantID
@@ -79,9 +86,8 @@ namespace WebApplication1.Controllers
 
             return View(viewModel);
         }
-
+       
         // GET: Restaurants/Create
-        [Authorize(Roles = "Restaurant Owner")]
         public IActionResult Create()
         {
             ViewData["Category"] = new SelectList(_context.Category, "Name", "Name");
@@ -94,11 +100,22 @@ namespace WebApplication1.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Restaurant Owner")]
         public async Task<IActionResult> Create([Bind("RestaurantId,Name,Category,City,Address")] Restaurant restaurant)
         {
             if (ModelState.IsValid)
             {
+                ClaimsPrincipal currentUser = this.User;
+                var currentUserName = currentUser.FindFirst(ClaimTypes.Name).Value;
+                var first = _context.TestUsers.SingleOrDefault(c => c.FirstName == currentUserName).FirstName;
+                var last = _context.TestUsers.SingleOrDefault(c => c.FirstName == currentUserName).LastName;
+                var manager = new Manager();
+                manager.FirstName = first.ToString();
+                manager.LastName = last.ToString();
+                manager.RestaurantId = restaurant.RestaurantId;
+                manager.Restaurant = restaurant;
+                await _context.SaveChangesAsync();
+                
+                restaurant.Manager = manager;
                 _context.Add(restaurant);
                 _context.SaveChanges();
 
@@ -123,7 +140,6 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-
             var restaurant = await _context.Restaurant.FindAsync(id);
             if (restaurant == null)
             {
@@ -144,7 +160,13 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserName = currentUser.FindFirst(ClaimTypes.Name).Value;
+            var managerName = _context.Managers.SingleOrDefault(c => c.RestaurantId == id).FirstName;
+            if (currentUserName.ToString() != managerName.ToString())
+            {
+                return View("AccessDenied", "Shared");
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -176,7 +198,13 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserName = currentUser.FindFirst(ClaimTypes.Name).Value;
+            var managerName = _context.Managers.SingleOrDefault(c => c.RestaurantId == id).FirstName;
+            if (currentUserName.ToString() != managerName.ToString())
+            {
+                return View("AccessDenied", "Shared");
+            }
             var restaurant = await _context.Restaurant
                 .FirstOrDefaultAsync(m => m.RestaurantId == id);
             if (restaurant == null)
@@ -193,6 +221,23 @@ namespace WebApplication1.Controllers
         [Authorize(Roles = "Restaurant Owner")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserName = currentUser.FindFirst(ClaimTypes.Name).Value;
+            var managerName = _context.Managers.SingleOrDefault(c => c.RestaurantId == id).FirstName;
+            if (currentUserName.ToString() != managerName.ToString())
+            {
+                return View("AccessDenied", "Shared");
+            }
+            var enrollment = _context.Enrollments.SingleOrDefault(e => e.RestaurantId == id);
+            if (enrollment != null)
+            {
+                _context.Enrollments.Remove(enrollment);
+            }
+            var manager = _context.Managers.SingleOrDefault(m => m.RestaurantId == id);
+            if (manager != null)
+            {
+                _context.Managers.Remove(manager);
+            }
             var restaurant = await _context.Restaurant.FindAsync(id);
             _context.Restaurant.Remove(restaurant);
             await _context.SaveChangesAsync();

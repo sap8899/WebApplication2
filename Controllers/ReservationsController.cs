@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Reservations
-        [Authorize(Roles = "Restaurant Owner")]
+        [Authorize(Roles = "Site Admin")]
         public async Task<IActionResult> Index(string option, string search)
         {
             //if a user choose the radio button option as Subject  
@@ -44,7 +45,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Reservations/Details/5
-        [Authorize(Roles = "Restaurant Owner")]
+        [Authorize(Roles = "Restaurant Owner"), Authorize(Roles = "Site Admin")]
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -52,7 +53,6 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-
             var reservation = await _context.TestReservations
                 .Include(r => r.Restaurant)
                 .FirstOrDefaultAsync(m => m.RestaurantID == id);
@@ -68,7 +68,6 @@ namespace WebApplication1.Controllers
         public IActionResult Create()
         {
             ViewData["RestaurantID"] = new SelectList(_context.Restaurant, "RestaurantId", "Name");
-            ViewData["User"] = new SelectList(_context.Users, "UserName", "UserName");
             return View();
         }
 
@@ -81,20 +80,21 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
+                ClaimsPrincipal currentUser = this.User;
+                var currentUserName = currentUser.FindFirst(ClaimTypes.Name).Value;
                 var res = new Reservation();
                 res.ReservationID = reservation.ReservationID;
                 res.Restaurant = reservation.Restaurant;
                 res.NumberOfPeople = reservation.NumberOfPeople;
                 res.RestaurantID = reservation.RestaurantID;
-                res.User = reservation.User;
+                res.User = currentUserName.ToString();
                 res.ReservationDate = reservation.ReservationDate;
-                res.UserToken = _context.Users.SingleOrDefault(us => us.UserName == reservation.User).Id;
+                res.UserToken = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
                 _context.TestReservations.Add(res);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("index", "Home");
             }
             ViewData["RestaurantID"] = new SelectList(_context.Restaurant, "RestaurantId", "Name", reservation.RestaurantID);
-            ViewData["User"] = new SelectList(_context.Users, "UserName", "UserName", reservation.User);
             return View(reservation);
         }
 

@@ -22,11 +22,12 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Cities
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.City.ToListAsync());
         }
-
+        [AllowAnonymous]
         // GET: Cities/Details/5
         public async Task<IActionResult> Details(int? id)
         {

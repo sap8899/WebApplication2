@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -94,6 +96,19 @@
         </div>
     </div>
 
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Site Admin"))
+    {
+        <div class="admin-view">
+            <a href="/Reservations/Index" class="btn btn-md admin-btn">View Reservations</a>
+        </div>
+        <div class="admin-view">
+            <a href="/Categories/Create" class="btn btn-md admin-btn">Create Categories</a>
+        </div>
+        <div class="admin-view">
+            <a href="/Cities/Create" class="btn btn-md admin-btn">Create Cities</a>
+        </div>
+    }
+
     <!--team end-->
     <!--why u come here start-->
 
@@ -131,10 +146,10 @@
                         <br>
                         <br />
                     </p>
-                    <a href="/Statistics/Index1" class="btn btn-md home-btn">Group By</a>
-                    <a href="/Statistics/Index2" class="btn btn-md home-btn">Join</a>
-                    <a href="/Statistics/graph1" class="btn btn-md home-btn">Graph1</a>
-                    <a href="/Statistics/graph2" class="btn btn-md home-btn">Graph2</a>
+                    <a href="/Statistics/Index1" class="btn btn-md home-btn">Cities Group By</a>
+                    <a href="/Statistics/Index2" class="btn btn-md home-btn">Reservations Join</a>
+                    <a href="/Statistics/graph1" class="btn btn-md home-btn">Cities Graph</a>
+                    <a href="/Statistics/graph2" class="btn btn-md home-btn">Reservations Graph</a>
                 </div>
 
                 <div class="col-sm-6">
