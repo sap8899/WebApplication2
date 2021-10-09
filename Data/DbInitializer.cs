@@ -129,7 +129,7 @@ namespace WebApplication1.Data
                     RestaurantId=restaurants.FirstOrDefault(r => r.Name == "Vivino").RestaurantId},
                 new Manager{FirstName="ben", LastName="korman",
                     RestaurantId=restaurants.FirstOrDefault(r => r.Name == "Mexicana").RestaurantId},
-                new Manager{FirstName="ilay", LastName="hait",
+                new Manager{FirstName="ilay", LastName="chait",
                     RestaurantId=restaurants.FirstOrDefault(r => r.Name == "Landwer").RestaurantId}
             };  
             foreach (Manager m in managers)
