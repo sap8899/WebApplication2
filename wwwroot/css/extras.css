@@ -1,0 +1,36 @@
+﻿/* CSS Document */
+html, body {
+    height: 100%;
+    width: 100%;
+    background: lightsteelblue;
+    font-family: "Playfair Display";
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: "Playfair Display";
+    letter-spacing: 3px;
+    color:white;
+}
+h1{
+    color:darkblue;
+}
+.col-md-6{
+    background-color:gainsboro;
+}
+.jumbotron{
+    background-color:darkblue;
+}
+.hero-paragraph {
+    font-size: 18px;
+}
+.hero-img {
+    width: 250px;
+    position: relative;
+    border-radius: 50%;
+}
+.label-primary {
+    background-color: gainsboro;
+}
+.form-control {
+    background-color: gainsboro;
+}

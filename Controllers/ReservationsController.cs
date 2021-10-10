@@ -45,7 +45,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Reservations/Details/5
-        [Authorize(Roles = "Restaurant Owner"), Authorize(Roles = "Site Admin")]
+        [Authorize(Roles = "Restaurant Owner,Site Admin")]
 
         public async Task<IActionResult> Details(int? id)
         {
