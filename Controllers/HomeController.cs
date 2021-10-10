@@ -19,7 +19,6 @@ namespace WebApplication1.Controllers
         {
             _logger = logger;
         }
-
         [AllowAnonymous]
         public IActionResult Index()
         {

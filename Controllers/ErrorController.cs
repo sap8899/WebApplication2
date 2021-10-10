@@ -30,6 +30,14 @@ namespace WebApplication1.Controllers
 
             return View("Error");
         }
+        public ActionResult Index()
+        {
+            return View();
+        }
+        public ActionResult NotFound()
+        {
+            return View();
+        }
     }
 
 }

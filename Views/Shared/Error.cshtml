@@ -1,4 +1,20 @@
-﻿@if (ViewBag.ErrorTitle == null)
+﻿@model System.Web.Mvc.HandleErrorInfo
+@{
+    ViewBag.Title = "Customize Error Page";
+}
+
+<div style=" padding: 20px; color:red">
+    <h3>
+        Customized By Default Error Page:
+    </h3>
+    <h4>
+        Sorry, an error occurred while processing your request Or View Of Corresponding Controller and Controller Action Method Not There.
+    </h4>
+    <h6>@Html.ActionLink("Go Back To Home Page", "Index", "Home")</h6> @*link name , action method name , controller name*@
+    <br />
+    <br />
+</div>
+@*@if (ViewBag.ErrorTitle == null)
 {
     <h3>An error occured while processing your request.</h3>
     <h3>The support team is notified and we are working on the fix.</h3>
@@ -8,7 +24,7 @@ else
 {
     <h1 class="text-danger">@ViewBag.ErrorTitle</h1>
     <h6 class="text-danger">@ViewBag.ErrorMessage</h6>
-}
+}*@
 
 <!--
 AddHashtag if (Model.ShowRequestId)
