@@ -1,0 +1,69 @@
+﻿@model WebApplication1.Models.OpenWeatherMap
+<style>
+    #apiDiv {
+        padding-left: 20px;
+    }
+
+        #apiDiv select, #apiDiv button {
+            font-size: 25px;
+        }
+
+        #apiDiv h4 {
+            margin: 10px 0;
+        }
+
+        #apiDiv #message table {
+            width: 100%;
+            border: double 1px #000000;
+            background: #ffffff;
+            color:darkblue;
+        }
+
+            #apiDiv #message table th {
+                text-align: left;
+                background: #ffffff;
+                color:darkblue;
+            }
+</style>
+@{ ViewBag.Title = "Weather";}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/extras.css">
+
+    <title>Weather</title>
+</head>
+<body>
+    <h1>Check the weather for knowing your style</h1>
+
+
+    <div id="apiDiv">
+        <h4>Select the City for Weather Report</h4>
+        @using (Html.BeginForm())
+        {
+            foreach (var city in Model.cities)
+            {
+                <span>
+                    @Html.RadioButtonFor(m => m.cities, city.Value) @city.Key
+                </span>
+            }
+
+            <button name="submit">Submit</button>
+        }
+        <div id="message">@(Html.Raw(Model.apiResponse))</div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("input[id='cities']").change(function () {
+                $(this).parents("#apiDiv").find("span").css("background", "none");
+                $(this).parent().css("background", "blue");
+            });
+        });
+    </script>
+</body>

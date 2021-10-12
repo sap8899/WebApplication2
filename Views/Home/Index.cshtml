@@ -141,26 +141,45 @@
                 </div>
 
             </div>
-
             <div class="row mt-4">
+                <div class="col-sm-6">
+                    <img src="img/weather.jpg" class="img-fluid hero-img2" alt="img3">
+                </div>
 
                 <div class="col-sm-6">
-                    <h3 class="hero-heading">Statistics</h3>
+                    <h3 class="hero-heading">Weather</h3>
                     <p class="hero-paragraph">
-                        Recive a restaurant Statistics.
+                        Want to eat outside in the rain? or missing out a perfect day for some lunch in the sun?
+                        We Guess not. check the weather NOW!
                         <br>
                         <br />
                     </p>
-                    <a href="/Statistics/Index1" class="btn btn-md home-btn">Cities Group By</a>
-                    <a href="/Statistics/Index2" class="btn btn-md home-btn">Reservations Join</a>
-                    <a href="/Statistics/graph1" class="btn btn-md home-btn">Cities Graph</a>
-                    <a href="/Statistics/graph2" class="btn btn-md home-btn">Reservations Graph</a>
+                    <a href="/Weather/Index" class="btn btn-md home-btn">click here</a>
                 </div>
 
-                <div class="col-sm-6">
-                    <img src="img/ai.jpg" class="img-fluid hero-img" alt="img2">
-                </div>
             </div>
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Site Admin"))
+            {
+                <div class="row mt-4">
+
+                    <div class="col-sm-6">
+                        <h3 class="hero-heading">Statistics</h3>
+                        <p class="hero-paragraph">
+                            Recive a restaurant Statistics.
+                            <br>
+                            <br />
+                        </p>
+                        <a href="/Statistics/Index1" class="btn btn-md home-btn">Cities Group By</a>
+                        <a href="/Statistics/Index2" class="btn btn-md home-btn">Reservations Join</a>
+                        <a href="/Statistics/graph1" class="btn btn-md home-btn">Cities Graph</a>
+                        <a href="/Statistics/graph2" class="btn btn-md home-btn">Reservations Graph</a>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <img src="img/ai.jpg" class="img-fluid hero-img" alt="img2">
+                    </div>
+                </div>
+            }
         </div>
     </div>
     <!--why u come here end-->

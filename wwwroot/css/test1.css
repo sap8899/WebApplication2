@@ -103,8 +103,8 @@ h3{
 .bg-gray {
     background-color: lightsteelblue;
     position: relative;
-    width: 800px;
-    height: 800px;
+    width: 1000px;
+    height: 1000px;
     border: 4px groove white;
     border-radius: 5px;
 }
@@ -122,6 +122,10 @@ h3{
 .hero-img {
     border-radius: 0px 30px 0px 30px;
     width: 250px;
+}
+.hero-img2 {
+    border-radius: 0px 30px 0px 30px;
+    width: 200px;
 }
 
 /*why u come here end*/
