@@ -122,6 +122,11 @@ namespace WebApplication1.Controllers
                 var currentUserName = currentUser.FindFirst(ClaimTypes.Name).Value;
                 var first = _context.TestUsers.SingleOrDefault(c => c.FirstName == currentUserName).FirstName;
                 var last = _context.TestUsers.SingleOrDefault(c => c.FirstName == currentUserName).LastName;
+                var test_manager = _context.Managers.SingleOrDefault(m => m.FirstName == first);
+                if(test_manager != null)
+                {
+                    return View("ErrorManage", "Restaurants");
+                }
                 var manager = new Manager();
                 manager.FirstName = first.ToString();
                 manager.LastName = last.ToString();

@@ -14,11 +14,15 @@ namespace EmployeeManagement.Controllers
     {
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly WebApplication1Context _context;
+
         public AccountController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            WebApplication1Context context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            _context = context;
         }
 
         [HttpGet]
@@ -34,8 +38,15 @@ namespace EmployeeManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Copy data from RegisterViewModel to IdentityUser
-                var user = new IdentityUser
+                var test_user = new User();
+                test_user.FirstName = model.UserName;
+                test_user.LastName = model.UserName;
+                test_user.Email = model.Email;
+                _context.TestUsers.Add(test_user);
+                _context.SaveChanges();
+
+                    // Copy data from RegisterViewModel to IdentityUser
+                    var user = new IdentityUser
                 {
                     UserName = model.UserName,
                     Email = model.Email

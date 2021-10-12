@@ -37,7 +37,7 @@ namespace WebApplication1.Data
             modelBuilder.Entity<Manager>().ToTable("Manager");
 
             modelBuilder.Entity<Reservation>()
-                .HasKey(c => new { c.RestaurantID, c.UserToken });
+                .HasKey(c => new { c.ReservationID });
             base.OnModelCreating(modelBuilder);
 
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
