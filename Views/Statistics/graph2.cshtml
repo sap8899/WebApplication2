@@ -16,6 +16,13 @@
     <script src="https://github.com/dotnetcurry/D3.js-aspnet-webapi-charts/blob/master/D3PieChartWithWebAPI/Scripts/jquery-1.10.2.js"></script>
 </head>
 <body>
+    <h1>Join Graph:</h1>
+    <section>
+        here you can see the amount of reservations per day.
+    </section>
+    <section>
+        if you want to see the amount of rrestaurants per city you should check <a href="/Statistics/graph1">this page</a>
+    </section>
     <svg width="600" height="500"></svg>
     <script>
         var svg = d3.select("svg"),
@@ -65,7 +72,7 @@
                         .call(d3.axisLeft(yScale).tickFormat(function (d) {
                             return d;
                         })
-                        .ticks(5))
+                            .ticks(5))
                         .append("text")
                         .attr("transform", "rotate(-90)")
                         .attr("y", 6)

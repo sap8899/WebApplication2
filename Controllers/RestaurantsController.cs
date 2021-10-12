@@ -22,32 +22,46 @@ namespace WebApplication1.Controllers
         }
         [AllowAnonymous]
         // GET: Restaurants
-        public async Task<IActionResult> Index(string RestaurantCategory,string searchString)
+        public async Task<IActionResult> Index(string option,string search)
         {
-            // Use LINQ to get list of categories.
-            IQueryable<string> genreQuery = from r in _context.Restaurant
-                                            orderby r.Category
-                                            select r.Category;
-
-            var rest = from r in _context.Restaurant
-                       select r;
-            if (!string.IsNullOrEmpty(searchString))
+            //if a user choose the radio button option as Subject  
+            if (option == "Restaurant")
             {
-                rest = rest.Where(s => s.Name.Contains(searchString));
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return View(_context.Restaurant.Where(x => x.Name.Contains(search) || search == null).ToList());
             }
-
-            if (!string.IsNullOrEmpty(RestaurantCategory))
+            else if (option == "City")
             {
-                rest = rest.Where(x => x.Category == RestaurantCategory);
+                return View(_context.Restaurant.Where(x => x.City.Contains(search) || search == null).ToList());
             }
-
-            var RestaurantCatrgoryVM = new CategoryViewModel
+            else
             {
-                Categories = new SelectList(await genreQuery.Distinct().ToListAsync()),
-                Restaurants = await rest.ToListAsync()
-            };
+                return View(_context.Restaurant.Where(x => x.Category.Contains(search) || search == null).ToList());
+            }
+            //// Use LINQ to get list of categories.
+            //IQueryable<string> genreQuery = from r in _context.Restaurant
+            //                                orderby r.Category
+            //                                select r.Category;
 
-            return View(RestaurantCatrgoryVM);
+            //var rest = from r in _context.Restaurant
+            //           select r;
+            //if (!string.IsNullOrEmpty(searchString))
+            //{
+            //    rest = rest.Where(s => s.Name.Contains(searchString));
+            //}
+
+            //if (!string.IsNullOrEmpty(RestaurantCategory))
+            //{
+            //    rest = rest.Where(x => x.Category == RestaurantCategory);
+            //}
+
+            //var RestaurantCatrgoryVM = new CategoryViewModel
+            //{
+            //    Categories = new SelectList(await genreQuery.Distinct().ToListAsync()),
+            //    Restaurants = await rest.ToListAsync()
+            //};
+
+            //return View(RestaurantCatrgoryVM);
         }
         [Authorize(Roles = "Restaurant Owner")]
         // GET: Restaurants/Details/5
@@ -136,6 +150,13 @@ namespace WebApplication1.Controllers
         [Authorize(Roles = "Restaurant Owner")]
         public async Task<IActionResult> Edit(int? id)
         {
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserName = currentUser.FindFirst(ClaimTypes.Name).Value;
+            var managerName = _context.Managers.SingleOrDefault(c => c.RestaurantId == id).FirstName;
+            if (currentUserName.ToString() != managerName.ToString())
+            {
+                return View("AccessDenied", "Shared");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -145,6 +166,8 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
+            ViewData["Category"] = new SelectList(_context.Category, "Name", "Name", restaurant.Category);
+            ViewData["City"] = new SelectList(_context.City, "Name", "Name", restaurant.City);
             return View(restaurant);
         }
 
@@ -171,6 +194,13 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
+                    var enrollment = _context.Enrollments.SingleOrDefault(enr => enr.RestaurantId == id);
+                    enrollment.Category = _context.Category.SingleOrDefault(enr => enr.Name == restaurant.Category);
+                    enrollment.CategoryId = _context.Category.SingleOrDefault(enr => enr.Name == restaurant.Category).Id;
+                    enrollment.City = _context.City.SingleOrDefault(enr => enr.Name == restaurant.City);
+                    enrollment.CityId = _context.City.SingleOrDefault(enr => enr.Name == restaurant.City).Id;
+                    _context.Enrollments.Update(enrollment);
+                    _context.SaveChanges();
                     _context.Update(restaurant);
                     await _context.SaveChangesAsync();
                 }
@@ -187,6 +217,8 @@ namespace WebApplication1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Category"] = new SelectList(_context.Category, "Name", "Name", restaurant.Category);
+            ViewData["City"] = new SelectList(_context.City, "Name", "Name", restaurant.City);
             return View(restaurant);
         }
 

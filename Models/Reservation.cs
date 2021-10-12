@@ -10,6 +10,8 @@ namespace WebApplication1.Models
     public class Reservation
     {
         [Key]
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ReservationID { get; set; }
         
         public string UserToken { get; set; }

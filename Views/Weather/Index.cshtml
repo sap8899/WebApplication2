@@ -1,30 +1,4 @@
 ﻿@model WebApplication1.Models.OpenWeatherMap
-<style>
-    #apiDiv {
-        padding-left: 20px;
-    }
-
-        #apiDiv select, #apiDiv button {
-            font-size: 25px;
-        }
-
-        #apiDiv h4 {
-            margin: 10px 0;
-        }
-
-        #apiDiv #message table {
-            width: 100%;
-            border: double 1px #000000;
-            background: #ffffff;
-            color:darkblue;
-        }
-
-            #apiDiv #message table th {
-                text-align: left;
-                background: #ffffff;
-                color:darkblue;
-            }
-</style>
 @{ ViewBag.Title = "Weather";}
 <head>
     <!-- Required meta tags -->
@@ -39,7 +13,10 @@
     <title>Weather</title>
 </head>
 <body>
-    <h1>Check the weather for knowing your style</h1>
+    <h3>Choose the perfect Restaurant for the perfect weather</h3>
+    <div class="columnsWeather">If its Summer you should eat some borito at Mexicana by the beach!
+    If its Winter you should eat some warming noodles at ChopChop! For spring vibes we recommand the perfect salad at Ladwers.
+    And for the amazing Fall weather you really need some of Vivino's Pizza, Enjoy!</div>
 
 
     <div id="apiDiv">

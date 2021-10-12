@@ -26,6 +26,7 @@
         //the following are search options
         @Html.RadioButton("option", "Restaurant") <text>Restaurant</text>
         @Html.RadioButton("option", "City") <text> City </text>
+        @Html.RadioButton("option", "User") <text> User </text>
         @Html.RadioButton("option", "Category")<text>Category</text>
         @Html.TextBox("search")
         <input type="submit"
@@ -67,8 +68,8 @@
                         @Html.DisplayFor(modelItem => item.ReservationDate)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ReservationID/* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ReservationID/* id=item.PrimaryKey */ })
                     </td>
                 </tr>
             }
